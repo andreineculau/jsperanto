@@ -26,9 +26,9 @@
 
         'dictionary': false, // to supply the dictionary instead of loading it using $.ajax. A (big) javascript object containing your namespaced translations
 
-        'fallbackLang': 'en-US', // see Language fallback section
+        'fallbackLocale': 'en_US', // see Locale fallback section
 
-        'lang': false //specify a language to use
+        'locale': false //specify a locale to use
     };
 
     var pluralNotFound = ['plural_not_found_', Math.random()].join(''); // used internally by translate
@@ -36,11 +36,11 @@
 	var dictionary = false; //not yet loaded
 	var currentLang = false;
 
-	var detectLanguage = function() {
+	var detectLocale = function() {
 		if (navigator) {
 			return navigator.language ? navigator.language : navigator.userLanguage;
 		} else {
-			return o.fallbackLang;
+			return o.fallbackLocale;
 		}
 	};
 
@@ -177,7 +177,7 @@
 		$.extend(o, options);
 
 		if (!o.lang) {
-            o.lang = detectLanguage();
+            o.lang = detectLocale();
         }
 
 		loadDictionary(o.lang, function(loadedLang) {
@@ -202,8 +202,8 @@
 
         'U': translateUpperCase,
 
-        'detectLanguage': detectLanguage,
+        'detectLocale': detectLocale,
 
-		'lang': lang
+		'locale': locale
 	});
 })(this, this.document, this.jQuery);
