@@ -36,7 +36,7 @@
 	var dictionary = false; //not yet loaded
 	var currentLang = false;
 
-	var detectLocale = function() {
+	var detect = function() {
 		if (navigator) {
 			return navigator.language ? navigator.language : navigator.userLanguage;
 		} else {
@@ -176,8 +176,8 @@
 	$.jsperanto = function(callback, options) {
 		$.extend(o, options);
 
-		if (!o.lang) {
-            o.lang = detectLocale();
+		if (!o.lang || o.lang === 'detect') {
+            o.lang = detect();
         }
 
 		loadDictionary(o.lang, function(loadedLang) {
@@ -202,7 +202,7 @@
 
         'U': translateUpperCase,
 
-        'detectLocale': detectLocale,
+        'detect': detect,
 
 		'locale': locale
 	});
