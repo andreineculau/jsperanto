@@ -184,7 +184,9 @@
                 $.U = translateUpperCase;
             }
 
-			callback(translate);
+            if (typeof callback === 'function') {
+			    callback(translate);
+            }
 		});
     };
 
