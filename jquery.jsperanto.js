@@ -34,7 +34,7 @@
     var pluralNotFound = ['plural_not_found_', Math.random()].join(''); // used internally by translate
 	var countRecursion = 0;
 	var dictionary = false; //not yet loaded
-	var currentLang = false;
+	var currentLocale = false;
 
 	var detect = function() {
 		if (navigator) {
@@ -44,24 +44,24 @@
 		}
 	};
 
-	var loadDictionary = function(lang, doneCallback) {
+	var loadDictionary = function(locale, doneCallback) {
 		if (o.dictionary) {
 			dictionary = o.dictionary;
-			doneCallback(lang);
+			doneCallback(locale);
 			return;
 		}
 
 		$.ajax({
-			'url': o.dictionaryPath + '/' + lang + '.json',
+			'url': o.dictionaryPath + '/' + locale + '.json',
 
 			'success': function(data, status, xhr) {
 				dictionary = data;
-				doneCallback(lang);
+				doneCallback(locale);
 			},
 
 			'error': function(xhr, status, error) {
-				if (lang != o.fallbackLang) {
-					loadDictionary(o.fallbackLang, doneCallback);
+				if (locale != o.fallbackLocale) {
+					loadDictionary(o.fallbackLocale, doneCallback);
 				} else {
 					doneCallback(false);
 				}
@@ -164,24 +164,19 @@
         return text.toUpperCase();
     };
 
-	var lang = function(newLang) {
-        if (newLang) {
-            loadDictionary(newLang, function() {
-            });
-        } else {
-		    return currentLang;
-        }
+	var locale = function() {
+		return currentLocale;
 	};
 
 	$.jsperanto = function(callback, options) {
 		$.extend(o, options);
 
-		if (!o.lang || o.lang === 'detect') {
-            o.lang = detect();
+		if (!o.locale || o.locale === 'detect') {
+            o.locale = detect();
         }
 
-		loadDictionary(o.lang, function(loadedLang) {
-			currentLang = loadedLang;
+		loadDictionary(o.locale, function(loadedLocale) {
+			currentLocale = loadedLocale;
 
             if (o.setDollarT) {
                 $.t = translate;
