@@ -118,16 +118,15 @@
         }
 
 		if (needsPlural(options)) {
-			var optionsPlural = $.extend({}, options, {
-                'defaultValue': pluralNotFound,
-                'count': 1
-            });
+			var optionsPlural = $.extend({}, options);
+            delete optionsPlural.count;
+            optionsPlural.defautValue = pluralNotFound;
 
 			var pluralKey = dottedkey + o.pluralSuffix;
 			var translated = translate(pluralKey, optionsPlural);
 
             //apply replacement for count only
-			if (translated !== o.pluralNotFound) {
+			if (translated !== pluralNotFound) {
 				return applyReplacement(translated, {
                     'count': options.count
                 });
