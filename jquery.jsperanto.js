@@ -10,7 +10,7 @@
 
         'interpolationSuffix': '__',
 
-        'keyseparator': '.', // keys passed to $.jsperanto.translate use this separator
+        'keySeparator': '.', // keys passed to $.jsperanto.translate use this separator
 
         'pluralSuffix': '_plural',
 
