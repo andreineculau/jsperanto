@@ -133,9 +133,18 @@
 	        }
 	    }
 
-	    var keys = dottedkey.split(o.keySeparator);
-	    var i = 0;
-	    var value = dictionary;
+	    var keys, i, value;
+
+        if (dictionary[dottedkey]) {
+            value = dictionary[dottedkey];
+	        value = applyReplacement(value, options);
+	        value = applyReuse(value, options);
+	        return value;
+        }
+
+	    keys = dottedkey.split(o.keySeparator);
+	    i = 0;
+	    value = dictionary;
         while (keys[i]) {
             value = value && value[keys[i]];
             i++;
@@ -183,20 +192,20 @@
                 $.T = translateCapital;
                 $.U = translateUpperCase;
             }
-            
+
             if (typeof callback === 'function') {
 		        callback(translate);
             }
 	    });
     };
-    
+
     $.extend($.jsperanto, {
         'translate': translate,
-        
+
 	    't': translate,
 
         'T': translateCapital,
-        
+
         'U': translateUpperCase,
 
         'detect': detect,
